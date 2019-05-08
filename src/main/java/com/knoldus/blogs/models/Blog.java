@@ -6,10 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.couchbase.core.mapping.Document;
+import org.springframework.data.couchbase.core.mapping.id.GeneratedValue;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
+
+import static org.springframework.data.couchbase.core.mapping.id.GenerationStrategy.UNIQUE;
 
 @Builder
 @Data
@@ -17,8 +20,8 @@ import java.util.List;
 @Document
 public class Blog {
     
-    @Id
-    String id;
+    @Id @GeneratedValue(strategy = UNIQUE)
+    final String id;
     
     @Size(min=10)
     @NotNull
