@@ -24,6 +24,11 @@ public class Config extends AbstractCouchbaseConfiguration {
     protected String getBucketPassword() {
         return "knoldus";
     }
+    
+    @Override
+    protected String getUsername() {
+        return "Administrator";
+    }
 }
 
 
