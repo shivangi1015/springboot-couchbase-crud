@@ -1,15 +1,16 @@
 package com.knoldus.blogs.repository;
 
 import com.knoldus.blogs.models.Blog;
+import org.springframework.data.couchbase.core.query.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface BlogRepository extends CrudRepository<Blog, String> {
     
-    long countByAuthor(String author);
+    Blog findByAuthor(String author);
     
-    long deleteBytopicAndAuthor(String title, String author);
+    List<Blog> deleteBytopicAndAuthor(String title, String author);
     
-    List<Blog> findByTags(String tag);
 }

@@ -25,13 +25,14 @@ public class BlogController {
         return "Welcome to the CRUD application!!";
     }
     
-    @PostMapping("/blog/add")
+    @PostMapping("/blog")
     public Blog addBlogPost(@RequestBody Blog newBlog) {
         return blogRepository.save(newBlog);
     }
     
     @GetMapping("/blog/get/{id}")
     public Optional<Blog> getBlog(@PathVariable String id) {
+        System.out.println("\n\nhere......");
         if (blogRepository.existsById(id)) {
             return blogRepository.findById(id);
         } else
@@ -40,22 +41,21 @@ public class BlogController {
     
     @GetMapping("/blog/count")
     public long countTotalBlogs() {
-        System.out.println("==here... ");
         return blogRepository.count();
     }
     
-    @GetMapping("/blogs/count/author/{author}")
-    public long countBlogsPerAuthor(@PathVariable String author) {
-        return blogRepository.countByAuthor(author);
+    @GetMapping("/blogs/author/{author}")
+    public Blog getBlogByAuthorName(@PathVariable String author) {
+        return blogRepository.findByAuthor(author);
     }
     
-    @DeleteMapping("/blogs/delete/{title}/{author}")
-    public long deleteByParams(@PathVariable String topic, @PathVariable String author) {
+    @DeleteMapping("/blogs/topic/author/{topic}/{author}")
+    public List<Blog> deleteByParams(@PathVariable String topic, @PathVariable String author) {
         return blogRepository.deleteBytopicAndAuthor(topic, author);
     }
     
-    @GetMapping("/blogs/get/tag/{tag}")
-    public List<Blog> getBlogs(@PathVariable String tag) {
-        return blogRepository.findByTags(tag);
+    @DeleteMapping("/blogs/id/{id}")
+    public void deleteById(@PathVariable String id) {
+        blogRepository.deleteById(id);
     }
 }
