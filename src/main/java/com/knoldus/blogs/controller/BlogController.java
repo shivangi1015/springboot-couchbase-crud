@@ -1,6 +1,6 @@
 package com.knoldus.blogs.controller;
 
-import com.knoldus.blogs.models.Blog;
+import com.knoldus.blogs.models.Blogs;
 import com.knoldus.blogs.repository.BlogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,13 +25,13 @@ public class BlogController {
         return "Welcome to the CRUD application!!";
     }
     
-    @PostMapping("/blog")
-    public Blog addBlogPost(@RequestBody Blog newBlog) {
+    @PostMapping("/blogs")
+    public Blogs addBlogPost(@RequestBody Blogs newBlog) {
         return blogRepository.save(newBlog);
     }
     
-    @GetMapping("/blog/get/{id}")
-    public Optional<Blog> getBlog(@PathVariable String id) {
+    @GetMapping("/blogs/get/{id}")
+    public Optional<Blogs> getBlog(@PathVariable String id) {
         System.out.println("\n\nhere......");
         if (blogRepository.existsById(id)) {
             return blogRepository.findById(id);
@@ -39,18 +39,18 @@ public class BlogController {
             return Optional.empty();
     }
     
-    @GetMapping("/blog/count")
+    @GetMapping("/blogs/count")
     public long countTotalBlogs() {
         return blogRepository.count();
     }
     
     @GetMapping("/blogs/author/{author}")
-    public Blog getBlogByAuthorName(@PathVariable String author) {
+    public Blogs getBlogByAuthorName(@PathVariable String author) {
         return blogRepository.findByAuthor(author);
     }
     
     @DeleteMapping("/blogs/topic/author/{topic}/{author}")
-    public List<Blog> deleteByParams(@PathVariable String topic, @PathVariable String author) {
+    public List<Blogs> deleteByParams(@PathVariable String topic, @PathVariable String author) {
         return blogRepository.deleteBytopicAndAuthor(topic, author);
     }
     

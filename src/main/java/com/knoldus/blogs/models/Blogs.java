@@ -6,21 +6,19 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.couchbase.core.mapping.Document;
-import org.springframework.data.couchbase.core.mapping.id.GeneratedValue;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 import java.util.List;
-
-import static org.springframework.data.couchbase.core.mapping.id.GenerationStrategy.UNIQUE;
 
 @Builder
 @Data
 @AllArgsConstructor
 @Document
-public class Blog {
+public class Blogs {
     
-    @Id @GeneratedValue(strategy = UNIQUE)
+    @Id
     final String id;
     
     @Size(min=10)
@@ -34,8 +32,8 @@ public class Blog {
     
     @Field
     List<String> tags;
-   /*
+    
     @Field
-    Date date;*/
+    Date date;
     
 }
