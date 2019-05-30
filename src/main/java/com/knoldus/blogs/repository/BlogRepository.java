@@ -14,5 +14,5 @@ public interface BlogRepository extends ReactiveCouchbaseRepository<Blogs, Strin
     
     Flux<Blogs> findByAuthor(String author);
     
-    Mono<Blogs> deleteBytopicAndAuthor(String title, String author);
+    Mono<Void> deleteBytopicAndAuthor(String title, String author);
 }

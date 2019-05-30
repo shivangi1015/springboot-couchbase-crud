@@ -32,33 +32,34 @@ public class BlogController {
         return blogRepository.save(newBlog);
     }
     
-    @GetMapping("blogs/{id}")
+    @GetMapping("/blogs/{id}")
     public Mono<Blogs> getBlog(@PathVariable String id) {
         return blogRepository.existsById(id)
                 .filter(booleanValue -> booleanValue.equals(true))
                 .flatMap(boolValue -> blogRepository.findById(id));
     }
     
-  /*  @GetMapping("/count")
-    public Mono<Long> countTotalBlogs() {
-        return blogRepository.count();
-    }*/
-    
     @GetMapping("/blogs/author/{author}")
     public ResponseEntity<Flux<Blogs>> getBlogByAuthorName(@PathVariable String author) {
         Flux<Blogs> byAuthor = blogRepository.findByAuthor(author);
         return ResponseEntity.ok().body(byAuthor);
     }
-  /*
+    
     @DeleteMapping("/blogs/topic/{topic}/author/{author}")
-    public Mono<Blogs> deleteByAuthorAndTopic(@PathVariable String topic, @PathVariable String author) {
-        return blogRepository.deleteBytopicAndAuthor(topic, author);
+    public Mono<Void> deleteByAuthorAndTopic(@PathVariable String topic, @PathVariable String author) {
+        return blogRepository.deleteBytopicAndAuthor(topic, author)
+                .onErrorMap(exp -> {
+                    throw new RuntimeException("Document does not exist.");
+                });
     }
     
     @DeleteMapping("/blogs/{id}")
     public Mono<Void> deleteById(@PathVariable String id) {
-        return blogRepository.deleteById(id);
-    }*/
+        return blogRepository.deleteById(id)
+                .onErrorMap(exp -> {
+                    throw new RuntimeException("Document does not exist.");
+                });
+    }
     
     @PutMapping("/blogs/{idToBeUpdated}")
     public Mono<String> updateBlog(@PathVariable String idToBeUpdated,
