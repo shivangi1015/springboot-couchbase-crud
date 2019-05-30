@@ -1,13 +1,18 @@
 package com.knoldus.blogs.repository;
 
 import com.knoldus.blogs.models.Blogs;
+import org.springframework.data.couchbase.repository.ReactiveCouchbaseRepository;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
-public interface BlogRepository extends CrudRepository<Blogs, String> {
+@Repository
+public interface BlogRepository extends ReactiveCouchbaseRepository<Blogs, String> {
     
-    Blogs findByAuthor(String author);
+    Flux<Blogs> findByAuthor(String author);
     
-    List<Blogs> deleteBytopicAndAuthor(String title, String author);
+    Mono<Blogs> deleteBytopicAndAuthor(String title, String author);
 }
