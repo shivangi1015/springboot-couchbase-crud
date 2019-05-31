@@ -9,8 +9,9 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 
-@Repository
 public interface BlogRepository extends ReactiveCouchbaseRepository<Blogs, String> {
+    
+    Mono<Blogs> save(Blogs blogs);
     
     Flux<Blogs> findByAuthor(String author);
     
